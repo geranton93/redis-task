@@ -1,0 +1,4 @@
+src/db/migrations
+dist
+node_modules
+.vscode

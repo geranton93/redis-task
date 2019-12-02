@@ -1,0 +1,44 @@
+version: '3.5'
+
+services:
+    #--Redis--#
+    redis:
+        image: redis
+        ports:
+            - "6379:6379"
+        restart: always
+    #--Stream--#
+    stream:
+        image: segment/fake-event-stream
+        environment:
+            - REDIS_HOST=redis
+            - REDIS_PORT=6379
+            - REDIS_CHANNEL=events
+            - EVENTS_PER_SECOND=10
+        links:
+            - redis
+    #--Back-end app--#
+    # server:
+    #     env_file:
+    #         - ./.env
+    #     container_name: testtask
+    #     restart: always
+    #     build:
+    #         context: ../../
+    #         dockerfile: Dockerfile
+    #     ports:
+    #         - '2502:2502'
+    #         - '2501:2501'
+    #     links:
+    #         - redis
+    #     networks:
+    #         - redis
+    #     depends_on:
+    #         - redis
+
+# networks:
+#     postgres:
+#         driver: bridge
+
+# volumes:
+#     postgres:
