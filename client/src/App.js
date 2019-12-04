@@ -5,7 +5,7 @@ import socket from './libs/sockets';
 import axios from './libs/axios';
 
 // Components
-import EventList from './components/Events/EventList/EventList';
+import { EventList } from './components/Events/EventList/EventList';
 
 const App = () => {
     return (
