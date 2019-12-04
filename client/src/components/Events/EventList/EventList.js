@@ -5,16 +5,16 @@ import {
     TextField,
     InputAdornment
 } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
 import { Search } from '@material-ui/icons';
-import { makeStyles } from "@material-ui/styles";
 
 import { EventTable } from './EventTable/EventsTable';
 
-import styles from './EventList.styles';
+import { useStyles } from './EventList.styles';
 
-const EventList = props => {
-    const { socket, axios, classes } = props;
+export const EventList = props => {
+    const { socket, axios } = props;
+
+    const classes = useStyles();
 
     const [filterState, setFilterState] = useState('');
     const [eventsListState, setEventsListState] = useState([]);
@@ -68,7 +68,7 @@ const EventList = props => {
                     </Button>
                 </ButtonGroup>
                 <TextField
-                    className={classes.search}
+                    className={classes.eventsSearch}
                     type="text"
                     name="searchValue"
                     variant="outlined"
@@ -92,5 +92,3 @@ const EventList = props => {
         </>
     );
 };
-
-export default withStyles(styles)(EventList);
