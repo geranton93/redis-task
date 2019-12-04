@@ -12,6 +12,7 @@ lerna-debug.log*
 
 # lock files
 package-lock.json
+yarn.lock
 
 # IDE - VSCode
 .vscode

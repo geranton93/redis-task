@@ -17,34 +17,22 @@ export class EventsService {
     }
 
     public async subscribe(): Promise<void> {
-        try {
-            await this.redisService.subscribeWithPattern(this.pattern);
-        } catch (error) {
-            throw error;
-        }
+        await this.redisService.subscribeWithPattern(this.pattern);
     }
 
     public async unsubscribe(): Promise<void> {
-        try {
-            await this.redisService.unsubscribeWithPattern(this.pattern);
-        } catch (error) {
-            throw error;
-        }
+        await this.redisService.unsubscribeWithPattern(this.pattern);
     }
 
     public async emitEvent(): Promise<void> {
-        try {
-            await this.redisService.executeOnEvent(
-                async (
-                    pattern: string,
-                    channel: string,
-                    message: string
-                ): Promise<void> => {
-                    await this.wsService.emitForUser(this.pattern, message);
-                }
-            );
-        } catch (error) {
-            throw error;
-        }
+        await this.redisService.executeOnEvent(
+            async (
+                pattern: string,
+                channel: string,
+                message: string
+            ): Promise<void> => {
+                await this.wsService.emitForUser(this.pattern, message);
+            }
+        );
     }
 }

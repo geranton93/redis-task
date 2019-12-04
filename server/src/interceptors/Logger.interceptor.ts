@@ -13,10 +13,10 @@ import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
-    public intercept(
+    public async intercept(
         context: ExecutionContext,
         next: CallHandler
-    ): Observable<any> {
+    ): Promise<Observable<any>> {
         const request = context.switchToHttp().getRequest<FastifyRequest>();
 
         const timestamp = new Date().toLocaleString();

@@ -4,30 +4,22 @@ import { Server, Socket } from 'socket.io';
 @Injectable()
 export class WsService {
     private readonly wss: Server;
+    private socket: Socket;
 
     constructor(@Inject('WEBSOCKET_SERVER') wss: Server) {
         this.wss = wss;
 
-        this.log();
+        this.establishConnection();
     }
 
-    public async log() {
-        try {
-            await this.wss.on('connection', (socket: Socket) => {
-                socket.emit('message', `${socket.id} connected`);
-            });
-        } catch (error) {
-            throw error;
-        }
+    public async establishConnection() {
+        this.wss.on('connection', (socket: Socket) => {
+            this.socket = socket;
+            this.socket.emit('message', `${socket.id} connected`);
+        });
     }
 
     public async emitForUser(event: string, ...args: any[]): Promise<void> {
-        try {
-            await Promise.resolve(this.wss).then((wss: Server) => {
-                wss.emit(event, ...args);
-            });
-        } catch (error) {
-            throw error;
-        }
+        this.socket.emit(event, ...args);
     }
 }

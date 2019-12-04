@@ -14,28 +14,18 @@ export class RedisService {
     }
 
     public async subscribeWithPattern(pattern: string): Promise<Redis> {
-        try {
-            this.redis.psubscribe(pattern);
-            return this.redis;
-        } catch (error) {
-            throw error;
-        }
+        this.redis.psubscribe(pattern);
+        return this.redis;
     }
 
     public async unsubscribeWithPattern(pattern: string): Promise<Redis> {
-        try {
-            this.redis.punsubscribe(pattern);
-            return this.redis;
-        } catch (error) {
-            throw error;
-        }
+        this.redis.punsubscribe(pattern);
+        return this.redis;
     }
 
-    public async executeOnEvent(callback: (pattern: string, channel: string, message: string) => void): Promise<Redis> {
-        try {
-            return this.redis.on('pmessage', callback);
-        } catch (error) {
-            throw error;
-        }
+    public async executeOnEvent(
+        callback: (pattern: string, channel: string, message: string) => void
+    ): Promise<Redis> {
+        return this.redis.on('pmessage', callback);
     }
 }
