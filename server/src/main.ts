@@ -6,6 +6,8 @@ import {
 } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
 
+import createLogFolder from './utils/createLogFolder.util';
+
 async function bootstrap(): Promise<void> {
     try {
         const app = await NestFactory.create<NestFastifyApplication>(
@@ -15,9 +17,13 @@ async function bootstrap(): Promise<void> {
         const port = process.env.PORT || 2502;
         const host = process.env.HOST || 'localhost';
 
+        app.enableCors();
+
         await app.listen(port, host, () => {
-            Logger.log(`✅ server started on port: ${port}`, 'main.ts');
+            Logger.log(`✅ server started on port: ${port} host: ${host}`, 'main.ts');
         });
+
+        await createLogFolder();
     } catch (error) {
         Logger.error(error);
     }

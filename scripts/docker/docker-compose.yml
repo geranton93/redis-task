@@ -5,7 +5,7 @@ services:
     redis:
         image: redis
         ports:
-            - "6379:6379"
+            - '6379:6379'
         restart: always
     #--Stream--#
     stream:
@@ -17,28 +17,33 @@ services:
             - EVENTS_PER_SECOND=10
         links:
             - redis
-    #--Back-end app--#
+    # #--Back-end app--#
     # server:
-    #     env_file:
-    #         - ./.env
-    #     container_name: testtask
+    #     environment:
+    #         - PORT=2502
+    #         - HOST=0.0.0.0
+    #     container_name: testtask-server
     #     restart: always
     #     build:
-    #         context: ../../
+    #         context: ../../server/
     #         dockerfile: Dockerfile
     #     ports:
     #         - '2502:2502'
     #         - '2501:2501'
     #     links:
     #         - redis
-    #     networks:
-    #         - redis
     #     depends_on:
     #         - redis
-
-# networks:
-#     postgres:
-#         driver: bridge
-
-# volumes:
-#     postgres:
+    # #--Front-end app--#
+    # client:
+    #     container_name: testtask-client
+    #     restart: always
+    #     build:
+    #         context: ../../client/
+    #         dockerfile: Dockerfile
+    #     ports:
+    #         - '2500:2500'
+    #     links:
+    #         - server
+    #     depends_on:
+    #         - server
