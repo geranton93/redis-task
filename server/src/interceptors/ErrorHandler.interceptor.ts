@@ -7,8 +7,9 @@ import {
     Logger
 } from '@nestjs/common';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import * as fs from 'fs';
 import { ServerResponse } from 'http';
+import { logWriter } from '../helpers/LogWriter.helper';
+import path from 'path';
 
 @Catch()
 export class HttpErrorFilter implements ExceptionFilter {
@@ -32,19 +33,17 @@ export class HttpErrorFilter implements ExceptionFilter {
             message: exception.message.error || exception.message || null
         };
 
-        const { code, method, path, message, timestamp } = errorResponse;
+        const { code, method, path: url, message, timestamp } = errorResponse;
 
         Logger.error(
-            `code ${code}, method: ${method}, path: ${path}`,
+            `code ${code}, method: ${method}, path: ${url}`,
             `message: ${message}`,
             'ErrorHandler'
         );
 
-        fs.createWriteStream(`${process.cwd()}/logs/errors.log`, {
-            encoding: 'utf8',
-            flags: 'a+'
-        }).write(
-            `timestamp: ${timestamp} code ${code}, method: ${method}, path: ${path} message: ${message};\n`
+        await logWriter.write(
+            path.join(process.cwd(), 'logs', 'errors.log'),
+            `timestamp: ${timestamp} code ${code}, method: ${method}, path: ${url} message: ${message};\n`
         );
 
         response.status(status).send(errorResponse);

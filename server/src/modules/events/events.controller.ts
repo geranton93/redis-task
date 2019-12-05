@@ -15,7 +15,7 @@ export class EventsController {
             await this.eventsService.subscribe();
             return true;
         } catch (error) {
-            return error;
+            return false;
         }
     }
 
@@ -25,7 +25,7 @@ export class EventsController {
             await this.eventsService.unsubscribe();
             return true;
         } catch (error) {
-            return error;
+            return false;
         }
     }
 }

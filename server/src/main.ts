@@ -14,6 +14,7 @@ async function bootstrap(): Promise<void> {
             AppModule,
             new FastifyAdapter()
         );
+
         const port = process.env.PORT || 2502;
         const host = process.env.HOST || 'localhost';
 
@@ -25,7 +26,7 @@ async function bootstrap(): Promise<void> {
 
         await createLogFolder();
     } catch (error) {
-        Logger.error(error);
+        Logger.error(error.name, error.stack, error.message);
     }
 }
 bootstrap();
