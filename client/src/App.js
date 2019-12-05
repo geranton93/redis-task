@@ -2,17 +2,16 @@ import React from 'react';
 import { Container, Grid } from '@material-ui/core';
 
 import socket from './libs/sockets';
-import axios from './libs/axios';
 
 // Components
-import { EventList } from './components/Events/EventList/EventList';
+import { EventsList } from './containers';
 
 const App = () => {
     return (
         <div className="App">
             <Container>
                 <Grid container spacing="3" justify="center" alignItems="center">
-                    <EventList socket={socket} axios={axios} />
+                    <EventsList socket={socket} />
                 </Grid>
             </Container>
         </div>
