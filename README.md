@@ -18,3 +18,13 @@ Here’s what we care about:
 * The code is high-quality and tested
 
 Feel free to use the `docker-compose.yml` file I attached if you decide to use Docker for this challenge. The stream image will simulate a stream of events.
+
+## Build
+
+To run this app you need to have docker-compose and can build app with shell script using command below
+
+```sh
+
+$ sh build.sh
+
+```

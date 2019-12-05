@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import {
+    Grid,
     ButtonGroup,
     Button,
     TextField,
-    InputAdornment
+    InputAdornment,
+    ThemeProvider
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
+
+import theme from '../../../theme';
 
 import { EventTable } from './EventTable/EventsTable';
 
@@ -18,6 +22,7 @@ export const EventList = props => {
 
     const [filterState, setFilterState] = useState('');
     const [eventsListState, setEventsListState] = useState([]);
+    const [eventsStatus, setEventsStatus] = useState('pause')
 
     socket.on('message', data => {
         console.log(data);
@@ -27,7 +32,7 @@ export const EventList = props => {
         socket.on('events', data => {
             setEventsListState(prevState => {
                 prevState.push(JSON.parse(data));
-                if (prevState.length > 25) {
+                if (prevState.length > 20) {
                     prevState.shift();
                 }
                 return [...prevState];
@@ -38,6 +43,7 @@ export const EventList = props => {
     const sunbcribeOnEvents = async () => {
         try {
             await axios.get('/events/start');
+            setEventsStatus(() => 'live');
         } catch (error) {
             console.error(error);
         }
@@ -46,6 +52,7 @@ export const EventList = props => {
     const unsunbcribeFromEvents = async () => {
         try {
             await axios.get('/events/stop');
+            setEventsStatus(() => 'pause');
         } catch (error) {
             console.error(error);
         }
@@ -56,17 +63,25 @@ export const EventList = props => {
         setFilterState(() => event.target.value);
     };
 
+    const getButtonColor = (id) => {
+        return id === eventsStatus ? 'primary' : 'default'
+    }
+
     return (
         <>
-            <div className="events-form">
-                <ButtonGroup className="events-buttons">
-                    <Button id="live" onClick={sunbcribeOnEvents}>
-                        Live
-                    </Button>
-                    <Button id="pause" onClick={unsunbcribeFromEvents}>
-                        Pause
-                    </Button>
-                </ButtonGroup>
+            <Grid item xs="2" className={classes.actionsBar}>
+                <ThemeProvider theme={theme}>
+                    <ButtonGroup className={classes.buttonsGroup}>
+                        <Button id="live" 
+                            color={getButtonColor('live')} 
+                            onClick={sunbcribeOnEvents}>Live</Button>
+                        <Button id="pause" 
+                            color={getButtonColor('pause')} 
+                            onClick={unsunbcribeFromEvents}>Pause</Button>
+                    </ButtonGroup>
+                </ThemeProvider>
+            </Grid>
+            <Grid item xs="6" className={classes.actionsBar}>
                 <TextField
                     className={classes.eventsSearch}
                     type="text"
@@ -85,10 +100,8 @@ export const EventList = props => {
                         )
                     }}
                 />
-            </div>
-            <div>
-                <EventTable eventsList={eventsListState} filter={filterState} />
-            </div>
+            </Grid>
+            <EventTable eventsList={eventsListState} filter={filterState} />
         </>
     );
 };
