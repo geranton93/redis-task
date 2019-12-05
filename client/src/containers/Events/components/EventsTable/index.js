@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, TableBody, TableRow, TableCell, Grid } from '@material-ui/core';
 
-export const EventTable = props => {
+export const EventsTable = props => {
     return (
         <Grid container item xs="8">
             <Table>

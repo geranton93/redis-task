@@ -9,14 +9,16 @@ import {
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 
-import theme from '../../../theme';
+import EventsService from '../../../../services/events.service';
 
-import { EventTable } from './EventTable/EventsTable';
+import theme from '../../../../theme';
 
-import { useStyles } from './EventList.styles';
+import { EventsTable } from '..';
 
-export const EventList = props => {
-    const { socket, axios } = props;
+import { useStyles } from './styles';
+
+export const EventsList = props => {
+    const { socket } = props;
 
     const classes = useStyles();
 
@@ -42,7 +44,7 @@ export const EventList = props => {
 
     const sunbcribeOnEvents = async () => {
         try {
-            await axios.get('/events/start');
+            await EventsService.startEvents();
             setEventsStatus(() => 'live');
         } catch (error) {
             console.error(error);
@@ -51,7 +53,7 @@ export const EventList = props => {
 
     const unsunbcribeFromEvents = async () => {
         try {
-            await axios.get('/events/stop');
+            await EventsService.stopEvents();
             setEventsStatus(() => 'pause');
         } catch (error) {
             console.error(error);
@@ -101,7 +103,7 @@ export const EventList = props => {
                     }}
                 />
             </Grid>
-            <EventTable eventsList={eventsListState} filter={filterState} />
+            <EventsTable eventsList={eventsListState} filter={filterState} />
         </>
     );
 };
