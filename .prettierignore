@@ -1,4 +1,5 @@
 src/db/migrations
 dist
+build
 node_modules
 .vscode

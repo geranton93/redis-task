@@ -1,6 +1,6 @@
 FROM node:lts-alpine
 WORKDIR /testtask/client
-COPY ./.env.production ./.env
+COPY ./.env ./.env
 COPY package.json ./
 RUN apk --no-cache add --virtual builds-deps build-base python
 COPY build ./build

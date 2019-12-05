@@ -6,10 +6,11 @@ import {
     NestInterceptor
 } from '@nestjs/common';
 import { FastifyRequest } from 'fastify';
-import * as fs from 'fs';
+import path from 'path';
 import { Observable } from 'rxjs';
 // tslint:disable-next-line: no-submodule-imports
 import { tap } from 'rxjs/operators';
+import { logWriter } from '../helpers/LogWriter.helper';
 
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
@@ -21,22 +22,17 @@ export class LoggingInterceptor implements NestInterceptor {
 
         const timestamp = new Date().toLocaleString();
         const method = request.req.method;
-        const path = request.req.url;
+        const url = request.req.url;
         const now = Date.now();
 
-        Logger.log(`method: ${method}, path: ${path}`, 'LoggingInterceptor');
-
-        fs.createWriteStream(`${process.cwd()}/logs/requests.log`, {
-            encoding: 'utf8',
-            flags: 'a+'
-        }).write(`timestamp: ${timestamp}, method: ${method}, path: ${path}, `);
+        Logger.log(`method: ${method}, path: ${url}`, 'LoggingInterceptor');
 
         return next.handle().pipe(
-            tap(() => {
-                fs.createWriteStream(`${process.cwd()}/logs/requests.log`, {
-                    encoding: 'utf8',
-                    flags: 'a+'
-                }).write(`execution time: ${Date.now() - now}ms;\n`);
+            tap(async () => {
+                await logWriter.write(
+                    path.join(process.cwd(), 'logs', 'requests.log'),
+                    `timestamp: ${timestamp}, method: ${method}, path: ${url}, execution time: ${Date.now() - now}ms;\n`
+                );
             })
         );
     }
