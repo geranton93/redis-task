@@ -17,3 +17,6 @@ yarn.lock
 
 # IDE - VSCode
 .vscode
+
+# OS generated files
+.DS_Store
