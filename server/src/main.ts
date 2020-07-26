@@ -15,7 +15,7 @@ async function bootstrap(): Promise<void> {
             new FastifyAdapter()
         );
 
-        const port = process.env.PORT || 2502;
+        const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 2502;
         const host = process.env.HOST || 'localhost';
 
         app.enableCors();
