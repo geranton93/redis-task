@@ -1,7 +1,9 @@
+import { Injectable } from '@nestjs/common';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import path from 'path';
 
+@Injectable()
 export class ConfigService {
     private readonly envConfig: Record<string, string>;
 
