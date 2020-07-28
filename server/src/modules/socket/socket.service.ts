@@ -13,7 +13,7 @@ export class WsService {
     }
 
     public async establishConnection(): Promise<void> {
-        this.wss.on('connection', (socket: Socket) => {
+        this.wss.on('connection', (socket: Socket): void => {
             this.socket = socket;
             this.socket.emit('message', `${socket.id} connected`);
         });

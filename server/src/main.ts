@@ -20,7 +20,7 @@ async function bootstrap(): Promise<void> {
 
         app.enableCors();
 
-        await app.listen(port, host, () => {
+        await app.listen(port, host, (): void => {
             Logger.log(`✅ server started on port: ${port} host: ${host}`, 'main.ts');
         });
 
