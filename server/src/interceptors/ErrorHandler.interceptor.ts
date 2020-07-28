@@ -30,7 +30,7 @@ export class HttpErrorFilter implements ExceptionFilter {
             timestamp: new Date().toLocaleString(),
             path: request.req.url,
             method: request.req.method,
-            message: exception.message.error || exception.message || null
+            message: exception.message || null
         };
 
         const { code, method, path: url, message, timestamp } = errorResponse;

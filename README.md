@@ -13,8 +13,8 @@ Here’s what we care about:
 
 * It works
 * Write this like you would write production code at your company. i.e.
-	* Proper error handling and logging
-	* Resilient code that can recover from crashes/failures
+* Proper error handling and logging
+* Resilient code that can recover from crashes/failures
 * The code is high-quality and tested
 
 Feel free to use the `docker-compose.yml` file I attached if you decide to use Docker for this challenge. The stream image will simulate a stream of events.

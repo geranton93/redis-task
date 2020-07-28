@@ -6,7 +6,6 @@ import { WsService } from './socket.service';
 @Module({
     imports: [ConfigModule],
     providers: [wsProvider, WsService],
-    controllers: [],
     exports: [WsService]
 })
 export class SocketModule {}
