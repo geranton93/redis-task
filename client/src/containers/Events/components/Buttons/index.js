@@ -12,7 +12,7 @@ export const Buttons = ({
     const classes = useStyles();
 
     return (
-        <Grid item xs="2" className={classes.actionsBar}>
+        <Grid item xs={2} className={classes.actionsBar}>
             <ThemeProvider theme={theme}>
                 <ButtonGroup className={classes.buttonsGroup}>
                     <Button
