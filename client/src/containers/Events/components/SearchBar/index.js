@@ -8,7 +8,7 @@ export const SearchBar = ({ filterEvents }) => {
     const classes = useStyles();
 
     return (
-        <Grid item xs="6" className={classes.actionsBar}>
+        <Grid item xs={6} className={classes.actionsBar}>
             <TextField
                 className={classes.eventsSearch}
                 type="text"

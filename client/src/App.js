@@ -10,7 +10,7 @@ const App = () => {
     return (
         <div className="App">
             <Container>
-                <Grid container spacing="3" justify="center" alignItems="center">
+                <Grid container spacing={3} justify="center" alignItems="center">
                     <EventsContainer socket={socket} />
                 </Grid>
             </Container>
