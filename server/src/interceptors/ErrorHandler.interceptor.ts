@@ -7,7 +7,6 @@ import {
     Logger
 } from '@nestjs/common';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { ServerResponse } from 'http';
 import { logWriter } from '../helpers/LogWriter.helper';
 import path from 'path';
 
@@ -18,7 +17,7 @@ export class HttpErrorFilter implements ExceptionFilter {
         host: ArgumentsHost
     ): Promise<void> {
         const ctx = host.switchToHttp();
-        const response = ctx.getResponse<FastifyReply<ServerResponse>>();
+        const response = ctx.getResponse<FastifyReply>();
         const request = ctx.getRequest<FastifyRequest>();
 
         const status = exception.getStatus
@@ -28,8 +27,8 @@ export class HttpErrorFilter implements ExceptionFilter {
         const errorResponse = {
             code: status,
             timestamp: new Date().toLocaleString(),
-            path: request.req.url,
-            method: request.req.method,
+            path: request.url,
+            method: request.method,
             message: exception.message || null
         };
 

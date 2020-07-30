@@ -21,8 +21,8 @@ export class LoggingInterceptor implements NestInterceptor {
         const request = context.switchToHttp().getRequest<FastifyRequest>();
 
         const timestamp = new Date().toLocaleString();
-        const method = request.req.method;
-        const url = request.req.url;
+        const method = request.method;
+        const url = request.url;
         const now = Date.now();
 
         Logger.log(`method: ${method}, path: ${url}`, 'LoggingInterceptor');
