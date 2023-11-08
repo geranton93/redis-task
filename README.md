@@ -22,7 +22,5 @@ Feel free to use the `docker-compose.yml` file I attached if you decide to use D
 To run this app you need to have Node.js v12 LTS, npm, docker, docker-compose and can build app with shell script using command below
 
 ```sh
-
-$ sh build.sh
-
+sh build.sh
 ```
