@@ -35,15 +35,15 @@ services:
         depends_on:
             - redis
     #--Front-end app--#
-    client:
-        container_name: testtask-client
-        restart: always
-        build:
-            context: ../../client/
-            dockerfile: Dockerfile
-        ports:
-            - '2500:2500'
-        links:
-            - server
-        depends_on:
-            - server
+    # client:
+    #     container_name: testtask-client
+    #     restart: always
+    #     build:
+    #         context: ../../client/
+    #         dockerfile: Dockerfile
+    #     ports:
+    #         - '2500:2500'
+    #     links:
+    #         - server
+    #     depends_on:
+    #         - server
