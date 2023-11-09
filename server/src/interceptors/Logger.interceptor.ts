@@ -28,12 +28,17 @@ export class LoggingInterceptor implements NestInterceptor {
         Logger.log(`method: ${method}, path: ${url}`, 'LoggingInterceptor');
 
         return next.handle().pipe(
-            tap(async (): Promise<void> => {
-                await logWriter.write(
+            tap(() => {
+                logWriter.write(
                     path.join(process.cwd(), 'logs', 'requests.log'),
-                    `timestamp: ${timestamp}, method: ${method}, path: ${url}, execution time: ${Date.now() - now}ms;\n`
-                );
+                    `timestamp: ${timestamp}, method: ${method}, path: ${url}, execution time: ${
+                        Date.now() - now
+                    }ms;\n`
+                ).catch((error) => {
+                    Logger.error(error.name, error.stack, error.message);
+                });
             })
         );
+
     }
 }

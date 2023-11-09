@@ -1,9 +1,16 @@
-FROM node:12-alpine
+FROM node:20-alpine
+
 WORKDIR /testtask/client
-COPY ./.env ./.env
+
 COPY package.json ./
-RUN apk --no-cache add --virtual builds-deps build-base python
+COPY package-lock.json ./
+
+RUN npm ci && npm i serve -g
+
+COPY ./.env ./.env
+
 COPY build ./build
-RUN npm install --only=prod && npm install -g serve
+
 EXPOSE 2500
+
 CMD ["serve", "-l", "tcp://0.0.0.0:2500", "build"]
